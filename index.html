@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Belajar Coding - Ahmad Parshad Jaelani</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: #f8fafc;
+      color: #0f172a;
+      padding: 20px 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      color: #2563eb;
+      font-size: 1.6rem;
+      margin-bottom: 4px;
+    }
+
+    p.subtitle {
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+
+    .author-badge {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 4px 12px;
+      background-color: #dbeafe;
+      color: #1e40af;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border-radius: 20px;
+    }
+
+    .hero-card {
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      border: 1px solid #bfdbfe;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 25px;
+      text-align: center;
+      box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.05);
+    }
+
+    .hero-img, .tab-img {
+      width: 100%;
+      max-width: 380px;
+      height: 200px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+      object-fit: cover;
+    }
+
+    .hero-card h2 {
+      color: #1e40af;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .hero-card p {
+      color: #334155;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .section-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin: 20px 0 10px 4px;
+      border-left: 4px solid #2563eb;
+      padding-left: 8px;
+    }
+
+    .menu-vertical {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .menu-card {
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #1e293b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+      transition: all 0.2s ease;
+    }
+
+    .menu-card:active {
+      transform: scale(0.98);
+      background-color: #eff6ff;
+      border-color: #93c5fd;
+    }
+
+    .menu-card.disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      background-color: #f1f5f9;
+    }
+
+    .menu-card span.badge {
+      font-size: 0.75rem;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background-color: #f1f5f9;
+      color: #475569;
+    }
+
+    .recommendation-box {
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 18px;
+      margin-top: 15px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+    }
+
+    .rec-item {
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+      align-items: flex-start;
+    }
+
+    .rec-step {
+      background-color: #2563eb;
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .rec-text h4 {
+      font-size: 0.9rem;
+      color: #1e293b;
+      margin-bottom: 2px;
+    }
+
+    .rec-text p {
+      font-size: 0.8rem;
+      color: #64748b;
+      line-height: 1.4;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      padding-bottom: 10px;
+      color: #64748b;
+      font-size: 0.85rem;
+    }
+
+    footer strong {
+      color: #2563eb;
+    }
+
+    .tab-page {
+      display: none;
+      background-color: #ffffff;
+      border-radius: 16px;
+      padding: 24px 20px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+    }
+
+    .tab-page.active {
+      display: block;
+    }
+
+    .btn-back {
+      background-color: #f1f5f9;
+      color: #334155;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      margin-bottom: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tab-page h2 {
+      color: #1e3a8a;
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+    }
+
+    .tab-page p {
+      color: #334155;
+      line-height: 1.6;
+      font-size: 0.95rem;
+      margin-bottom: 15px;
+    }
+
+    .code-box {
+      background-color: #0f172a;
+      color: #38bdf8;
+      padding: 14px;
+      border-radius: 8px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.85rem;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      margin-bottom: 15px;
+    }
+
+    .question-block {
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .question-block p.q-title {
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 12px;
+    }
+
+    .input-nama {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      margin-top: 6px;
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .input-nama:focus {
+      border-color: #2563eb;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background-color: #ffffff;
+      border: 1px solid #cbd5e1;
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .option-label input[type="radio"] {
+      accent-color: #2563eb;
+    }
+
+    textarea {
+      width: 100%;
+      height: 90px;
+      padding: 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      margin-top: 8px;
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 10px;
+      box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+    }
+
+    .result-box {
+      display: none;
+      background-color: #eff6ff;
+      border: 2px dashed #2563eb;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .result-box h3 {
+      color: #1e3a8a;
+      font-size: 1.2rem;
+      margin-bottom: 6px;
+    }
+
+    .score-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #2563eb;
+      margin: 10px 0;
+    }
+
+    .btn-result-home {
+      width: 100%;
+      background-color: #1e293b;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    /* DESAIN MODAL NOTIFIKASI KUSTOM */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 360px;
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+      animation: popIn 0.2s ease-out;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-icon {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
+
+    .modal-card h3 {
+      font-size: 1.15rem;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+
+    .modal-card p {
+      font-size: 0.9rem;
+      color: #64748b;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .btn-modal-close {
+      width: 100%;
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ELEMENT MODAL CUSTOM -->
+  <div id="custom-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div id="modal-icon" class="modal-icon">🔒</div>
+      <h3 id="modal-title">Pemberitahuan</h3>
+      <p id="modal-msg">Pesan notifikasi...</p>
+      <button class="btn-modal-close" onclick="tutupModal()">Mengerti</button>
+    </div>
+  </div>
+
+  <div class="container">
+    
+    <div id="main-menu">
+      <header>
+        <h1>Belajar Coding</h1>
+        <p class="subtitle">Panduan Interaktif Pemula</p>
+        <div class="author-badge">Dibuat oleh: Ahmad Parshad Jaelani</div>
+      </header>
+
+      <div class="hero-card">
+        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&auto=format&fit=crop" alt="Foto Coding" class="hero-img">
+        <h2>Apa Itu Coding?</h2>
+        <p>Coding (pemrograman) adalah cara kita berkomunikasi dengan komputer dengan menuliskan serangkaian instruksi atau perintah menggunakan bahasa khusus. Tanpa coding, perangkat seperti HP, laptop, sistem kecerdasan buatan (AI), hingga game favoritmu tidak akan bisa berjalan!</p>
+        <p style="margin-top: 10px; font-size: 0.85rem; color: #475569;">Dengan menguasai coding, kamu bisa membangun karya digital sendiri—mulai dari membuat kerangka tampilan web, mendesain antarmuka yang modern, hingga mengatur logika program agar aplikasi berjalan otomatis.</p>
+      </div>
+
+      <div class="section-title">Modul Penjelasan Materi</div>
+      <div class="menu-vertical">
+        <div class="menu-card" onclick="bukaTab('html-tab')">
+          <span>HTML (Struktur Web)</span>
+          <span class="badge">Materi Lengkap</span>
+        </div>
+        <div class="menu-card" onclick="bukaTab('css-tab')">
+          <span>CSS (Desain Visual)</span>
+          <span class="badge">Materi Lengkap</span>
+        </div>
+        <div class="menu-card" onclick="bukaTab('js-tab')">
+          <span>JavaScript (Logika Interaktif)</span>
+          <span class="badge">Materi Lengkap</span>
+        </div>
+        <div class="menu-card" onclick="bukaTab('python-tab')">
+          <span>Python (Pemrograman Server & AI)</span>
+          <span class="badge">Materi Lengkap</span>
+        </div>
+      </div>
+
+      <div class="section-title">Latihan Pilihan Ganda (Level 1 - 5)</div>
+      <div class="menu-vertical">
+        <div class="menu-card" onclick="bukaTab('pg-tab')">
+          <span>Pilihan Ganda - Level 1 (Mudah)</span>
+          <span class="badge" style="background-color: #dbeafe; color: #1d4ed8;">20 Soal</span>
+        </div>
+        <div class="menu-card disabled" id="lvl2-card" onclick="bukaLevel2()">
+          <span>Pilihan Ganda - Level 2 (Sedang)</span>
+          <span class="badge" id="lvl2-badge">Minimal Nilai 80</span>
+        </div>
+        <div class="menu-card disabled" onclick="tampilkanModal('Terkunci', 'Selesaikan Level 2 dengan nilai minimal 80 untuk membuka Level 3!', '🔒')">
+          <span>Pilihan Ganda - Level 3 (Sulit)</span>
+          <span class="badge">Terkunci</span>
+        </div>
+        <div class="menu-card disabled" onclick="tampilkanModal('Terkunci', 'Tingkat ini belum dapat diakses!', '🔒')">
+          <span>Pilihan Ganda - Level 4 (Ahli)</span>
+          <span class="badge">Terkunci</span>
+        </div>
+        <div class="menu-card disabled" onclick="tampilkanModal('Terkunci', 'Tingkat ini belum dapat diakses!', '🔒')">
+          <span>Pilihan Ganda - Level 5 (Master)</span>
+          <span class="badge">Terkunci</span>
+        </div>
+      </div>
+
+      <div class="section-title">Latihan Esai (Level 1 - 5)</div>
+      <div class="menu-vertical">
+        <div class="menu-card" onclick="bukaTab('essai-tab')">
+          <span>Soal Esai - Level 1 (Dasar)</span>
+          <span class="badge" style="background-color: #fef3c7; color: #b45309;">5 Soal</span>
+        </div>
+        <div class="menu-card disabled" onclick="tampilkanModal('Terkunci', 'Tingkat esai ini masih terkunci!', '🔒')">
+          <span>Soal Esai - Level 2 s/d 5</span>
+          <span class="badge">Terkunci</span>
+        </div>
+      </div>
+
+      <div class="section-title">Rekomendasi Alur Belajar</div>
+      <div class="recommendation-box">
+        <div class="rec-item">
+          <div class="rec-step">1</div>
+          <div class="rec-text">
+            <h4>Mulai dari HTML</h4>
+            <p>Pahami dulu kerangka dasar web dan cara membuat teks atau tombol.</p>
+          </div>
+        </div>
+        <div class="rec-item">
+          <div class="rec-step">2</div>
+          <div class="rec-text">
+            <h4>Perantik dengan CSS</h4>
+            <p>Pelajari cara memberi warna, mengatur tata letak, dan tampilan visual.</p>
+          </div>
+        </div>
+        <div class="rec-item">
+          <div class="rec-step">3</div>
+          <div class="rec-text">
+            <h4>Hidupkan dengan JavaScript</h4>
+            <p>Buat website menjadi responsif dan bisa merespons aksi klik pengguna.</p>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <p>© 2026 Developer oleh <strong>Ahmad Parshad Jaelani</strong></p>
+      </footer>
+    </div>
+
+    <!-- TAB HTML -->
+    <div id="html-tab" class="tab-page">
+      <button class="btn-back" onclick="kembaliKeMenu()">← Kembali ke Menu</button>
+      <h2>HTML (HyperText Markup Language)</h2>
+      <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=600&auto=format&fit=crop" alt="HTML Coding" class="tab-img">
+      <p>HTML adalah fondasi dan pondasi utama dari setiap situs web di dunia. Ibarat sebuah bangunan rumah, HTML berperan sebagai tiang, tembok, dan pondasi dasar yang membentuk struktur bangunan tersebut.</p>
+      <p>File utama dari sebuah website biasanya diberi nama <code>index.html</code>. Nama ini merupakan standar global yang dibaca pertama kali oleh browser saat kamu mengunjungi suatu domain web.</p>
+      <p><strong>Fungsi Elemen Utama HTML:</strong></p>
+      <p>• <code>&lt;h1&gt;</code> hingga <code>&lt;h6&gt;</code>: Judul utama &amp; sub-judul artikel.<br>
+      • <code>&lt;p&gt;</code>: Paragraf teks biasa.<br>
+      • <code>&lt;img&gt;</code>: Menyisipkan gambar dari penyimpanan atau internet.<br>
+      • <code>&lt;a&gt;</code>: Link pembuka halaman lain.</p>
+      <div class="code-box">&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+  &lt;head&gt;
+    &lt;title&gt;Halaman Utama Saya&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Selamat Datang di Web Saya!&lt;/h1&gt;
+    &lt;p&gt;Ini adalah paragraf pertama saya.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</div>
+    </div>
+
+    <!-- TAB CSS -->
+    <div id="css-tab" class="tab-page">
+      <button class="btn-back" onclick="kembaliKeMenu()">← Kembali ke Menu</button>
+      <h2>CSS (Cascading Style Sheets)</h2>
+      <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=600&auto=format&fit=crop" alt="CSS Design" class="tab-img">
+      <p>Jika HTML adalah pondasi rumah, maka CSS adalah cat dinding, dekorasi interior, gorden, dan tata pencahayaannya. Tanpa CSS, tampilan website hanya akan tampak polosan berupa teks hitam putih di atas kertas polos.</p>
+      <p>CSS memungkinkan kamu mengatur jenis font yang estetis, memberikan warna latar belakang (*background*), memberikan efek animasi transisi halus, hingga mengatur agar tampilan web responsif di layar HP maupun laptop.</p>
+      <div class="code-box">body {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+.tombol-keren {
+  background-color: #2563eb;
+  color: white;
+}</div>
+    </div>
+
+    <!-- TAB JAVASCRIPT -->
+    <div id="js-tab" class="tab-page">
+      <button class="btn-back" onclick="kembaliKeMenu()">← Kembali ke Menu</button>
+      <h2>JavaScript (JS)</h2>
+      <img src="https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?w=600&auto=format&fit=crop" alt="JavaScript Code" class="tab-img">
+      <p>JavaScript adalah otak atau sistem penggerak yang membuat website menjadi hidup dan interaktif. Jika HTML membentuk tubuh dan CSS memberikan pakaian cantik, maka JavaScript yang memberikan kemampuan bergerak dan berpikir!</p>
+      <div class="code-box">function sapaPengguna(nama) {
+  tampilkanModal("Selamat Datang", "Halo " + nama + ", selamat datang!");
+}</div>
+    </div>
+
+    <!-- TAB PYTHON -->
+    <div id="python-tab" class="tab-page">
+      <button class="btn-back" onclick="kembaliKeMenu()">← Kembali ke Menu</button>
+      <h2>Python (Pemrograman Server & AI)</h2>
+      <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&auto=format&fit=crop" alt="Python Programming" class="tab-img">
+      <p>Python adalah salah satu bahasa pemrograman paling populer dan paling disukai oleh pemula di seluruh dunia. Alasan utamanya adalah tata bahasa (*sintaks*) Python sangat ringkas dan mudah dibaca seperti bahasa Inggris sehari-hari.</p>
+      <div class="code-box">nama = "Ahmad Parshad Jaelani"
+print(f"Developer: {nama}")</div>
+    </div>
+    <!-- TAB KUIS PILIHAN GANDA -->
+    <div id="pg-tab" class="tab-page">
+      <button class="btn-back" onclick="kembaliKeMenu()">← Kembali ke Menu</button>
+      <h2>Kuis Pilihan Ganda (Level 1 - Mudah)</h2>
+      <p>Pilihlah salah satu jawaban yang paling tepat dari 20 soal berikut. Batas KKM untuk membuka Level 2 adalah <strong>Nilai 80</strong>.</p>
+
+      <form id="quiz-form">
+        <div class="question-block" style="background-color: #eff6ff; border-color: #bfdbfe;">
+          <p class="q-title" style="color: #1e40af;">Identitas Peserta</p>
+          <label style="font-size: 0.85rem; font-weight: 600; color: #334155;">Nama Lengkap Kamu:</label>
+          <input type="text" id="nama-pg" class="input-nama" placeholder="Ketik nama lengkap kamu di sini..." required>
+        </div>
+
+        <div class="question-block">
+          <p class="q-title">1. Apa kepanjangan dari HTML?</p>
+          <label class="option-label"><input type="radio" name="q1" value="A"> A. Hyper Text Markup Language</label>
+          <label class="option-label"><input type="radio" name="q1" value="B"> B. High Text Machine Language</label>
+          <label class="option-label"><input type="radio" name="q1" value="C"> C. Hyper Transfer Mode Language</label>
+          <label class="option-label"><input type="radio" name="q1" value="D"> D. Home Tool Markup Language</label>
+        </div>
+
+        <div class="question-block">
+          <p class="q-title">2. Tag HTML yang digunakan untuk membuat judul utama adalah...</p>
+          <label class="option-label"><input type="radio" name="q2" value="A"> A. &lt;p&gt;</label>
+          <label class="option-label"><input type="radio" name="q2" value="B"> B. &lt;h1&gt;</label>
+          <label class="option-label"><input type="radio" name="q2" value="C"> C. &lt;title&gt;</label>
+          <label class="option-label"><input type="radio" name="q2" value="D"> D. &lt;head&gt;</label>
+        </div>
+
+        <div class="question-block">
+          <p class="q-title">3. Bahasa yang digunakan untuk menghias dan mendesain halaman web adalah...</p>
+          <label class="option-label"><input type="radio" name="q3" value="A"> A. HTML</label>
+          <label class="option-label"><input type="radio" name="q3" value="B"> B. Python</label>
+          <label class="option-label"><input type="radio" name="q3" value="C"> C. CSS</label>
+          <label class="option-label"><input type="radio" name="q3" value="D"> D. SQL</label>
+        </div>
+
+        <div class="question-block">
+          <p class="q-title">4. Bahasa pemrograman yang berfungsi membuat halaman web menjadi interaktif adalah...</p>
+          <label class="option-label"><input type="radio" name="q4" value="A"> A. JavaScript</label>
+          <label class="option-label"><input type="radio" name="q4" value="B"> B. HTML</label>
+          <label class="option-label"><input type="radio" name="q4" value="C"> C. CSS</label>
+          <label class="option-label"><input type="radio" name="q4" value="D"> D. C++</label>
+        </div>
+
+        <div class="question-block">
+          <p class="q-title">5. Sintaks CSS yang digunakan untuk mengubah warna teks adalah...</p>
+          <label class="option-label"><input type="radio" name="q5" value="A"> A. background-color</label>
+          <label class="option-label"><input type="radio" name="q5" value="B"> B. color</label>
+          <label class="option-label"><input type="radio" name="q5" value="C"> C. text-style</label>
+          <label class="option-label"><input type="radio" name="q5" value="D"> D. font-color</label>
+        </div>
+
+        <div class="question-block">
+          <p class="q-title">6. Nama file standar yang dibuka pertama kali oleh server web adalah...</p>
+          <label class="option-label"><input type="radio" name="q6" value="A"> A. home.html</label>
+          <label class="option-label"><input type="radio" name="q6" value="B"> B. index.html</label>
+          <label class="option-label"><input type="radio" name="q6" value="C"> C. main.html</label>
+          <label class="option-label"><input type="radio" name="q6" value="D"> D. web.html</label>
+        </div>
+
+        <div class="question-block">
+          <p class="q-title">7. Elemen HTML untuk menampilkan gambar di halaman web adalah...</p>
+          <label class="option-label"><input type="radio" name="q7" value="A"> A. &lt;image&gt;</label>
+          <label class="option-label"><input type="radio" name="q7" value="B"> B. &lt;src&gt;</label>
+          <label class="option-label"><input type="radio" name="q7" value="C"> C. &lt;img&gt;</label>
+          <label class="option-label"><input type="radio" name="q7" value="D"> D. &lt;picture&gt;</label>
+        </div>
+
+        <div class="question-block">
+          <p class="q-title">8. Di dalam sintaks Python, fungsi untuk menampilkan teks ke layar adalah...</p>
+          <label class="option-label"><input type="radio" name="q8" value="A"> A. console.log()</label>
+          <label class="option-label"><input type="radio" name="q8" value="B"> B. echo()</label>
+          <label class="option-label"><input type="radio" name="q8" value="C"> C. print()</label>
+          <label class="option-label"><input type="radio" name="q8" value="D"> D. write()</label>
+        </div>
+
+        <div class="question-block">
+          <p class="q-title">9. Karakter yang digunakan untuk membuat komentar di CSS adalah...</p>
+          <label class="option-label"><input type="radio" name="q9" value="A"> A. //</label>
+          <label class="option-label"><input type="radio" name="q9" value="B"> B. /* */</label>
+          <label class="option-label"><input type="radio" name="q9" value="C"> C. &lt;!-- --&gt;</label>
+          <label class="option-label"><input type="radio" name="q9" value="D"> D. #</label>
+        </div>
+
+        <div class="question-block">
+          <p class="q-title">10. Atribut HTML yang digunakan untuk mengarahkan link ke URL lain adalah...</p>
+          <label class="option-label"><input type="radio" name="q10" value="A"> A. src</label>
+          <label class="option-label"><input type="radio" name="q10" value="B"> B. href</label>
+          <label class="option-label"><input type="radio" name="q10" value="C"> C. link</label>
+          <label class="option-label"><input type="radio" name="q10" value="D"> D. url</label>
+        </div>
+
+        <div class="question-block">
+          <p class="q-title">11. Manakah tipe data angka bulat dalam pemrograman?</p>
+          <label class="option-label"><input type="radio" name="q11" value="A"> A. String</label>
+          <label class="option-label"><input type="radio" name="q11" value="B"> B. Float</label>
+          <label class="option-label"><input type="radio" name="q11" value="C"> C. Integer</label>
+          <label class="option-label"><input type="radio" name="q11" value="D"> D. Boolean</label>
+        </div>
+
+        <div class="question-block">
+          <p class="q-title">12. Tag HTML yang berfungsi membuat paragraf biasa adalah...</p>
+          <label class="option-label"><input type="radio" name="q12" value="A"> A. &lt;p&gt;</label>
+          <label class="option-label"><input type="radio" name="q12" value="B"> B. &lt;para&gt;</label>
+          <label class="option-label"><input type="radio" name="q12" value="C"> C. &lt;text&gt;</label>
+          <label class="option-label"><input type="radio" name="q12" value="D"> D. &lt;span&gt;</label>
+        </div>
+
+        <div class="question-block">
+          <p class="q-title">13. Properti CSS yang mengatur ukuran teks adalah...</p>
+          <label class="option-label"><input type="radio" name="q13" value="A"> A. text-size</label>
+          <label class="option-label"><input type="radio" name="q13" value="B"> B. font-size</label>
+          <label class="option-label"><input type="radio" name="q13" value="C"> C. font-style</label>
+          <label class="option-label"><input type="radio" name="q13" value="D"> D. size</label>
+        </div>
+
+        <div class="question-block">
+          <p class="q-title">14. Kata kunci untuk membuat variabel di JavaScript modern adalah...</p>
+          <label class="option-label"><input type="radio" name="q14" value="A"> A. int</label>
+          <label class="option-label"><input type="radio" name="q14" value="B"> B. let / const</label>
+          <label class="option-label"><input type="radio" name="q14" value="C"> C. dim</label>
+          <label class="option-label"><input type="radio" name="q14" value="D"> D. string</label>
+        </div>
+
+        <div class="question-block">
+          <p class="q-title">15. Tag pembungkus utama untuk menyisipkan script JavaScript di HTML adalah...</p>
+          <label class="option-label"><input type="radio" name="q15" value="A"> A. &lt;javascript&gt;</label>
+          <label class="option-label"><input type="radio" name="q15" value="B"> B. &lt;js&gt;</label>
+          <label class="option-label"><input type="radio" name="q15" value="C"> C. &lt;script&gt;</label>
+          <label class="option-label"><input type="radio" name="q15" value="D"> D. &lt;code&gt;</label>
+        </div>
+
+        <div class="question-block">
+          <p class="q-title">16. Tipe data yang hanya bernilai True atau False disebut...</p>
+          <label class="option-label"><input type="radio" name="q16" value="A"> A. Boolean</label>
+          <label class="option-label"><input type="radio" name="q16" value="B"> B. String</label>
+          <label class="option-label"><input type="radio" name="q16" value="C"> C. Array</label>
+          <label class="option-label"><input type="radio" name="q16" value="D"> D. Object</label>
+        </div>
+
+        <div class="question-block">
+          <p class="q-title">17. Simbol yang digunakan untuk selektor ID di CSS adalah...</p>
+          <label class="option-label"><input type="radio" name="q17" value="A"> A. Titik (.)</label>
+          <label class="option-label"><input type="radio" name="q17" value="B"> B. Pagar (#)</label>
+          <label class="option-label"><input type="radio" name="q17" value="C"> C. Bintang (*)</label>
+          <label class="option-label"><input type="radio" name="q17" value="D"> D. Persen (%)</label>
+        </div>
+
+        <div class="question-block">
+          <p class="q-title">18. Simbol yang digunakan untuk selektor Class di CSS adalah...</p>
+          <label class="option-label"><input type="radio" name="q18" value="A"> A. Titik (.)</label>
+          <label class="option-label"><input type="radio" name="q18" value="B"> B. Pagar (#)</label>
+          <label class="option-label"><input type="radio" name="q18" value="C"> C. Dan (&amp;)</label>
+          <label class="option-label"><input type="radio" name="q18" value="D"> D. At (@)</label>
+        </div>
+
+        <div class="question-block">
+          <p class="q-title">19. Struktur kontrol logika untuk percabangan syarat di programming adalah...</p>
+          <label class="option-label"><input type="radio" name="q19" value="A"> A. for / while</label>
+          <label class="option-label"><input type="radio" name="q19" value="B"> B. if / else</label>
+          <label class="option-label"><input type="radio" name="q19" value="C"> C. try / catch</label>
+          <label class="option-label"><input type="radio" name="q19" value="D"> D. import / export</label>
+        </div>
+
+        <div class="question-block">
+          <p class="q-title">20. Ekstensi file untuk lembar gaya CSS adalah...</p>
+          <label class="option-label"><input type="radio" name="q20" value="A"> A. .html</label>
+          <label class="option-label"><input type="radio" name="q20" value="B"> B. .js</label>
+          <label class="option-label"><input type="radio" name="q20" value="C"> C. .css</label>
+          <label class="option-label"><input type="radio" name="q20" value="D"> D. .py</label>
+        </div>
+
+        <button type="button" class="btn-submit" onclick="hitungNilaiPG()">Selesai &amp; Kumpulkan Tugas</button>
+      </form>
+
+      <div id="pg-result" class="result-box">
+        <h3 id="pg-nama-display">Hasil Nilai Kuis Kamu</h3>
+        <div class="score-number" id="pg-score-display">0</div>
+        <p id="pg-status-text">Selamat telah menyelesaikan 20 soal!</p>
+        <button class="btn-result-home" onclick="kembaliKeMenu()">← Kembali ke Menu Utama</button>
+      </div>
+    </div>
+
+    <!-- TAB ESAI -->
+    <div id="essai-tab" class="tab-page">
+      <button class="btn-back" onclick="kembaliKeMenu()">← Kembali ke Menu</button>
+      <h2>Latihan Soal Esai (Level 1 - Dasar)</h2>
+      <p>Jawablah 5 pertanyaan esai berikut sesuai dengan pemahamanmu.</p>
+
+      <form id="essai-form">
+        <div class="question-block" style="background-color: #fef3c7; border-color: #fde68a;">
+          <p class="q-title" style="color: #92400e;">Identitas Peserta</p>
+          <label style="font-size: 0.85rem; font-weight: 600; color: #334155;">Nama Lengkap Kamu:</label>
+          <input type="text" id="nama-essai" class="input-nama" placeholder="Ketik nama lengkap kamu di sini..." required>
+        </div>
+
+        <div class="question-block">
+          <p class="q-title">1. Jelaskan perbedaan utama antara HTML, CSS, dan JavaScript!</p>
+          <textarea id="essay1" placeholder="Tulis jawaban kamu di sini..."></textarea>
+        </div>
+
+        <div class="question-block">
+          <p class="q-title">2. Mengapa file utama web harus diberi nama index.html?</p>
+          <textarea id="essay2" placeholder="Tulis jawaban kamu di sini..."></textarea>
+        </div>
+
+        <div class="question-block">
+          <p class="q-title">3. Jelaskan apa yang dimaksud dengan variabel dalam pemrograman!</p>
+          <textarea id="essay3" placeholder="Tulis jawaban kamu di sini..."></textarea>
+        </div>
+
+        <div class="question-block">
+          <p class="q-title">4. Apa fungsi dari bahasa Python dan mengapa populer bagi pemula?</p>
+          <textarea id="essay4" placeholder="Tulis jawaban kamu di sini..."></textarea>
+        </div>
+
+        <div class="question-block">
+          <p class="q-title">5. Tuliskan contoh tag HTML untuk membuat judul dan paragraf!</p>
+          <textarea id="essay5" placeholder="Tulis jawaban kamu di sini..."></textarea>
+        </div>
+
+        <button type="button" class="btn-submit" onclick="kumpulkanEsai()">Kumpulkan Jawaban Esai</button>
+      </form>
+
+      <div id="essai-result" class="result-box">
+        <h3 id="essai-nama-display">Status Tugas Esai</h3>
+        <div class="score-number" style="color: #059669; font-size: 1.8rem;">TERKIRIM</div>
+        <p>Jawaban esai kamu telah berhasil disimpan!</p>
+        <button class="btn-result-home" onclick="kembaliKeMenu()">← Kembali ke Menu Utama</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    var kunciPG = {
+      q1: 'A', q2: 'B', q3: 'C', q4: 'A', q5: 'B',
+      q6: 'B', q7: 'C', q8: 'C', q9: 'B', q10: 'B',
+      q11: 'C', q12: 'A', q13: 'B', q14: 'B', q15: 'C',
+      q16: 'A', q17: 'B', q18: 'A', q19: 'B', q20: 'C'
+    };
+
+    var level2Terbuka = false;
+
+    // FUNGSI MODAL KUSTOM
+    function tampilkanModal(judul, pesan, ikon) {
+      document.getElementById('modal-title').innerText = judul;
+      document.getElementById('modal-msg').innerText = pesan;
+      document.getElementById('modal-icon').innerText = ikon || '⚠️';
+      document.getElementById('custom-modal').style.display = 'flex';
+    }
+
+    function tutupModal() {
+      document.getElementById('custom-modal').style.display = 'none';
+    }
+
+    function bukaTab(tabId) {
+      document.getElementById('main-menu').style.display = 'none';
+      var semuaTab = document.querySelectorAll('.tab-page');
+      semuaTab.forEach(function(tab) {
+        tab.classList.remove('active');
+      });
+      document.getElementById(tabId).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    function kembaliKeMenu() {
+      var semuaTab = document.querySelectorAll('.tab-page');
+      semuaTab.forEach(function(tab) {
+        tab.classList.remove('active');
+      });
+      document.getElementById('main-menu').style.display = 'block';
+      window.scrollTo(0, 0);
+    }
+
+    function hitungNilaiPG() {
+      var namaInput = document.getElementById('nama-pg').value.trim();
+
+      if (namaInput === '') {
+        tampilkanModal('Nama Wajib Diisi', 'Silakan isi nama kamu terlebih dahulu sebelum mengumpulkan kuis!', '✏️');
+        return;
+      }
+
+      var skorBenar = 0;
+      var form = document.getElementById('quiz-form');
+
+      for (var i = 1; i <= 20; i++) {
+        var radioGroup = form['q' + i];
+        if (radioGroup) {
+          for (var j = 0; j < radioGroup.length; j++) {
+            if (radioGroup[j].checked && radioGroup[j].value === kunciPG['q' + i]) {
+              skorBenar += 5;
+            }
+          }
+        }
+      }
+
+      var resultBox = document.getElementById('pg-result');
+      var namaDisplay = document.getElementById('pg-nama-display');
+      var scoreDisplay = document.getElementById('pg-score-display');
+      var statusText = document.getElementById('pg-status-text');
+
+      namaDisplay.innerText = 'Hasil Kuis: ' + namaInput;
+      scoreDisplay.innerText = skorBenar;
+      
+      if (skorBenar >= 80) {
+        statusText.innerText = 'Luar Biasa, ' + namaInput + '! Nilai kamu memenuhi KKM (80). Level 2 sekarang Terbuka!';
+        level2Terbuka = true;
+        
+        var cardLvl2 = document.getElementById('lvl2-card');
+        var badgeLvl2 = document.getElementById('lvl2-badge');
+        cardLvl2.classList.remove('disabled');
+        badgeLvl2.style.backgroundColor = '#dbeafe';
+        badgeLvl2.style.color = '#1d4ed8';
+        badgeLvl2.innerText = 'Terbuka';
+      } else if (skorBenar >= 60) {
+        statusText.innerText = 'Bagus, ' + namaInput + '! Tapi kamu butuh nilai minimal 80 untuk buka Level 2.';
+      } else {
+        statusText.innerText = 'Jangan Patah Semangat, ' + namaInput + '! Pelajari lagi materinya ya.';
+      }
+
+      resultBox.style.display = 'block';
+      resultBox.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function bukaLevel2() {
+      if (level2Terbuka) {
+        tampilkanModal('Level 2 Terbuka', 'Selamat datang di Level 2! Soal-soal baru sedang disiapkan.', '🎉');
+      } else {
+        tampilkanModal('Tingkat Terkunci', 'Selesaikan Level 1 dengan nilai minimal 80 untuk membuka Level 2!', '🔒');
+      }
+    }
+
+    function kumpulkanEsai() {
+      var namaInput = document.getElementById('nama-essai').value.trim();
+
+      if (namaInput === '') {
+        tampilkanModal('Nama Wajib Diisi', 'Silakan isi nama kamu terlebih dahulu sebelum mengumpulkan esai!', '✏️');
+        return;
+      }
+
+      var resultBox = document.getElementById('essai-result');
+      var namaDisplay = document.getElementById('essai-nama-display');
+      
+      namaDisplay.innerText = 'Status Esai: ' + namaInput;
+      resultBox.style.display = 'block';
+      resultBox.scrollIntoView({ behavior: 'smooth' });
+            fetch('https://script.google.com/macros/s/AKfycbx.../exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nama: namaInput,
+          nilai: 'Selesai Esai'
+
+        })
+      });
+
+    }
+  </script>
+
+</body>
+</html>
